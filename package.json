@@ -16,6 +16,7 @@
   "license": "ISC",
   "description": "Back-end test with node",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "node": "^23.7.0"
   }
 }
