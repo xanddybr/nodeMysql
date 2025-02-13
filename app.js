@@ -1,87 +1,17 @@
-// import express module
-const express = require("express");
-const mysql = require("mysql2")
 
-process.on('uncaughtException', (err) => {
-    console.error('Uncaught Exception:', err);
-});
+const express = require("express")
+const Crude = require("./ContactClass")
 
-// create app extend functions class express
-    const app = express();
-    app.use(express.json())
-    app.use(express.urlencoded({extended:true}))
+const app = express()
 
 
-    const mysqlCommand = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        port: 3306,
-        password: "Alex@1797",
-        database: "TEST"
-    })
 
-        mysqlCommand.connect((err)=>{
-            if(err) {
-                throw err = new Error("mysql not connected")
-            }
-            console.log("mysql connected")
-        })
+const crud = new Crude()
 
+//const sql = "INSERT INTO `contacts` (`name`,`phone`) VALUES ('João','2178885589'); SET @id_cont = LAST_INSERT_ID(); INSERT INTO `poll` (`id_cont`,`message`,`datatime`) VALUES (@id_cont, 'now is running...', DATE_FORMAT(NOW(),'%H:%i:%s %d/%m/%Y'));"
 
-    app.get("/user",(req,res)=> {
-        sql = 'select * from contacts'
-        mysqlCommand.query(sql, (err,result)=>{
-            if(err) {
-                throw err = new Error("mysql not connected")
-            }
-            res.json(result)
-            res.end()
-        })
-        
-    })
+crud.insertContato("select * from contacts")
 
-   app.get("/user/:id",(req,res)=> {
-        sql = 'select * from contacts where id = '+ Number(req.params.id)
-        mysqlCommand.query(sql, (err,result)=>{
-            if(err) {
-                throw err = new Error("mysql not connected")
-            }
-            res.json(result)
-            res.end()
-        })
-    })
-
-    app.post("/user",(req,res)=>{
-        sql = 'insert into contacts (name,phone) values ("'+req.body.name+'","'+req.body.phone+'")'
-        mysqlCommand.query(sql, (err,result)=>{
-            if(err) {
-                throw err = new Error("mysql not connected")
-            }
-            res.json(result)
-            res.end()
-        })
-    })
-
-    app.put("/user/:id",(req,res)=>{
-        sql = 'update contacts set name = "'+req.body.name+'", phone = "'+req.body.phone+'" where id = '+req.params.id
-        mysqlCommand.query(sql, (err,result)=>{
-            if(err) {
-                throw err = new Error("mysql not connected")
-            }
-            console.log(result)
-            res.end()
-        })
-    })
-
-    app.delete("/user/:id",(req,res)=>{
-        sql = 'delete from contacts where id = '+req.params.id
-        mysqlCommand.query(sql, (err,result)=>{
-            if(err) {
-                throw err = new Error("mysql not connected")
-            }
-            console.log(result)
-            res.end()
-        })
-    })
-   
-    app.listen(3000)
+app.listen(3000,() => {
+    console.log("Node is running...")
+})
