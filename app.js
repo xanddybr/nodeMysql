@@ -1,17 +1,25 @@
 
 const express = require("express")
+
 const Crude = require("./ContactClass")
 
 const app = express()
 
-
-
 const crud = new Crude()
 
-//const sql = "INSERT INTO `contacts` (`name`,`phone`) VALUES ('João','2178885589'); SET @id_cont = LAST_INSERT_ID(); INSERT INTO `poll` (`id_cont`,`message`,`datatime`) VALUES (@id_cont, 'now is running...', DATE_FORMAT(NOW(),'%H:%i:%s %d/%m/%Y'));"
+const sqldelete = "DELETE FROM contacts WHERE id_cont in ()";
 
-crud.insertContato("select * from contacts")
+const sqlinsert = "INSERT INTO contacts (`name`,`phone`) VALUES ('Alex','2124987860'); SET @id_cont = LAST_INSERT_ID(); INSERT INTO `poll` (`id_cont`,`message`,`datatime`) VALUES (@id_cont, 'Im participate of first poll', DATE_FORMAT(NOW(),'%H:%i:%s %d/%m/%Y'))";
+
+const sqlselect = "SELECT * FROM contacts";
+
+const nameCont = "Claudia";
+
+const sqlSrcExist = "SELECT * FROM contacts where name like 'luiz'"
+
+crud.select(sqlselect)
+
 
 app.listen(3000,() => {
-    console.log("Node is running...")
+    
 })
