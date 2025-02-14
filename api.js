@@ -3,6 +3,7 @@ const express = require("express");
 const mysqlCommand = require("./conn")
 
 
+
 // create app extend functions class express
     const app = express();
 
@@ -10,19 +11,7 @@ const mysqlCommand = require("./conn")
     app.use(express.urlencoded({extended:true}))
 
     app.get("/user",(req,res)=> {
-        sql = 'select * from contacts'
-        mysqlCommand.query(sql, (err,result)=>{
-            if(err) {
-                throw err = new Error("mysql not connected")
-            }
-            res.json(result)
-            res.end()
-        })
-        
-    })
-
-    app.get("/user/:id",(req,res)=> {
-        sql = 'select * from contacts where id_cont = '+ Number(req.params.id)
+        let sql = 'SELECT * from contacts, poll where contacts.id_cont = poll.id_cont';
         mysqlCommand.query(sql, (err,result)=>{
             if(err) {
                 throw err = new Error("mysql not connected")
@@ -33,7 +22,7 @@ const mysqlCommand = require("./conn")
     })
 
     app.post("/user",(req,res)=>{
-        sql = 'insert into contacts (name,phone) values ("'+req.body.name+'","'+req.body.phone+'")'
+        let sql = 'insert into contacts (name,phone) values ("'+req.body.name+'","'+req.body.phone+'")'
         mysqlCommand.query(sql, (err,result)=>{
             if(err) {
                 throw err = new Error("mysql not connected")
@@ -44,7 +33,7 @@ const mysqlCommand = require("./conn")
     })
 
     app.put("/user/:id",(req,res)=>{
-        sql = 'update contacts set name = "'+req.body.name+'", phone = "'+req.body.phone+'" where id = '+req.params.id
+        let sql = 'update contacts set name = "'+req.body.name+'", phone = "'+req.body.phone+'" where id = '+req.params.id
         mysqlCommand.query(sql, (err,result)=>{
             if(err) {
                 throw err = new Error("mysql not connected")
@@ -55,7 +44,7 @@ const mysqlCommand = require("./conn")
     })
 
     app.delete("/user/:id",(req,res)=>{
-        sql = 'delete from contacts where id = '+req.params.id
+        let sql = 'delete from contacts where id = '+req.params.id
         mysqlCommand.query(sql, (err,result)=>{
             if(err) {
                 throw err = new Error("mysql not connected")
@@ -66,7 +55,7 @@ const mysqlCommand = require("./conn")
     })
 
    
-
-
-   app.listen(4200)
+    app.listen(3000, ()=> {
+    console.log("Server is running on port 3001, API is ready to use!")
+   })
     

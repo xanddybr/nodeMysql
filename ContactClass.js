@@ -1,5 +1,4 @@
 
-const { exit } = require("process")
 const mysqlCommand = require("./conn")
 
 class Crude {
@@ -7,17 +6,19 @@ class Crude {
     id_count
     name
     phone
-    namepoll
-    create_at
+    name
+    datatime
 
 constructor(){ }
 
-select(sql){
+select(){
+    let sql = "SELECT * FROM contacts, poll where contacts.id_cont = poll.id_cont";
     mysqlCommand.query(sql, (err,result)=> {
         if(err) {
            throw err = new Error("mysql not connected")
         }
         console.log(result)
+        console.log(result.length, " Register fund...")
    })
 }
 
@@ -47,12 +48,13 @@ insert_Ifnot_Exist(name1){
 
     }
 
-deleteContact(sql){
+deleteContact(id_cont){
+    let sql = "DELETE FROM contacts WHERE id_cont in ("+ id_cont +")";
     mysqlCommand.query(sql, (err,result)=> {
         if(err) {
            throw err = new Error("mysql not connected")
         }
-        console.log(result)
+        console.log(result.serverStatus)
    })
 }
 
