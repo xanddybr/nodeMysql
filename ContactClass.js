@@ -1,41 +1,23 @@
 
+const e = require("express")
 const mysqlCommand = require("./conn")
+const { exit } = require("process")
 
-class Crude {
 
-    id_count
-    name
-    phone
-    name
-    datatime
 
-constructor(){ }
-
-selectNewId(){
+ 
+function selectNewId(){
     let sql = "SELECT * FROM contacts ORDER BY id_cont DESC LIMIT 1"
       mysqlCommand.query(sql, (err,result)=> {
-      let lastRegister = 0;
-
+      
         if(err) {
            throw err = new Error("mysql not connected")
         }
-
-        if(lastRegister == 0){
-             lastRegister = result[0].id_cont
-        }
-
-        if(result[0].id_cont > lastRegister){
-            lastRegister = result[0].id_cont
-            console.log("New Register found! register, his id is " + lastRegister)  
-            
-        }else{
-
-            console.log("There is not a new register, last register is " + lastRegister)
-        }
+        console.log(result, " Register fund...")
    })
 }
 
-select(){
+function select(){
     let sql = "SELECT * FROM contacts, poll where contacts.id_cont = poll.id_cont";
     mysqlCommand.query(sql, (err,result)=> {
         if(err) {
@@ -46,7 +28,7 @@ select(){
    })
 }
 
-insert_Ifnot_Exist(name1){
+function insert_Ifnot_Exist(name1){
 
     let sql = "SELECT * FROM contacts where name like '"+ name1 +"'"
 
@@ -72,7 +54,7 @@ insert_Ifnot_Exist(name1){
 
     }
 
-deleteContact(id_cont){
+function deleteContact(id_cont){
     let sql = "DELETE FROM contacts WHERE id_cont in ("+ id_cont +")";
     mysqlCommand.query(sql, (err,result)=> {
         if(err) {
@@ -82,6 +64,10 @@ deleteContact(id_cont){
    })
 }
 
-}
 
-module.exports = Crude
+module.exports = {
+    selectNewId,
+    select,
+    insert_Ifnot_Exist,
+    deleteContact
+}
