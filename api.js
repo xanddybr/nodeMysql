@@ -2,8 +2,6 @@
 const express = require("express");
 const mysqlCommand = require("./conn")
 
-
-
 // create app extend functions class express
     const app = express();
 
@@ -53,9 +51,8 @@ const mysqlCommand = require("./conn")
             res.end()
         })
     })
-
    
-    app.listen(3000, ()=> {
+    app.listen(3001, ()=> {
     console.log("Server is running on port 3001, API is ready to use!")
    })
     

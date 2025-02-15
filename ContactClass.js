@@ -11,6 +11,30 @@ class Crude {
 
 constructor(){ }
 
+selectNewId(){
+    let sql = "SELECT * FROM contacts ORDER BY id_cont DESC LIMIT 1"
+      mysqlCommand.query(sql, (err,result)=> {
+      let lastRegister = 0;
+
+        if(err) {
+           throw err = new Error("mysql not connected")
+        }
+
+        if(lastRegister == 0){
+             lastRegister = result[0].id_cont
+        }
+
+        if(result[0].id_cont > lastRegister){
+            lastRegister = result[0].id_cont
+            console.log("New Register found! register, his id is " + lastRegister)  
+            
+        }else{
+
+            console.log("There is not a new register, last register is " + lastRegister)
+        }
+   })
+}
+
 select(){
     let sql = "SELECT * FROM contacts, poll where contacts.id_cont = poll.id_cont";
     mysqlCommand.query(sql, (err,result)=> {
@@ -57,7 +81,6 @@ deleteContact(id_cont){
         console.log(result.serverStatus)
    })
 }
-
 
 }
 
